@@ -3,7 +3,7 @@ module.exports = {
     title: `daniel-stefan`,
     author: `Daniel Stefan Klose`,
     description: `A blog about code, travel, life`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    siteUrl: `https://ds-klose.de/`,
     social: {
       twitter: `DanielStefanK`,
     },
