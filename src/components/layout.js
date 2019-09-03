@@ -21,7 +21,7 @@ const dark = {
   main: "white",
   secondary: "#2a2a2a",
   link: "white",
-  brand: "palevioletred",
+  brand: "#fcf571",
   body: "#2a2a2a",
 }
 

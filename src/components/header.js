@@ -62,10 +62,12 @@ const Header = ({ location, title, children }) => {
     <HeadWrapper>
       <Logo>
         <Link
+          css={`
+            color: ${props => props.theme.brand || "inherit"};
+          `}
           style={{
             boxShadow: `none`,
             textDecoration: `none`,
-            color: `inherit`,
           }}
           to={`/`}
         >
