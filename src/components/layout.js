@@ -26,16 +26,17 @@ const dark = {
 }
 
 const LayoutEl = styled.div`
-  height: 100vh;
+  height: 100%;
   background-color: ${props =>
     props.theme.secondary ? props.theme.body : undefined};
   color: ${props => (props.theme.secondary ? props.theme.main : undefined)};
-  transition: all 0.4s;
+  transition: all 0.4s;E
 `
 
 const CenterLayout = styled.div`
   margin-left: auto;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   margin-right: auto;
   max-width: ${() => rhythm(24)};
   padding: ${() => rhythm(1.5)} ${() => rhythm(3 / 4)};
