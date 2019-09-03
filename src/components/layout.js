@@ -1,79 +1,81 @@
-import React from "react"
-import { Link } from "gatsby"
+import React, { useState, useEffect } from "react"
 
-import { rhythm, scale } from "../utils/typography"
+import { rhythm } from "../utils/typography"
 
-class Layout extends React.Component {
-  render() {
-    const { location, title, children } = this.props
-    const rootPath = `${__PATH_PREFIX__}/`
-    let header
+import styled, { ThemeProvider } from "styled-components"
 
-    if (location.pathname === rootPath) {
-      header = (
-        <h1
-          style={{
-            ...scale(1.5),
-            marginBottom: rhythm(1.5),
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/`}
-          >
-            {title}
-          </Link>
-        </h1>
-      )
-    } else {
-      header = (
-        <h3
-          style={{
-            fontFamily: `Montserrat, sans-serif`,
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/`}
-          >
-            {title}
-          </Link>
-        </h3>
-      )
-    }
-    return (
-      <div
-        style={{
-          marginLeft: `auto`,
-          marginRight: `auto`,
-          minHeight: "100%",
-          maxWidth: rhythm(24),
-          padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-        }}
-      >
-        <header>{header}</header>
-        <main
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          {children}
-        </main>
-        <footer>© {new Date().getFullYear()} Daniel Stefan Klose</footer>
-      </div>
-    )
+import ToggleTheme from "./themeToggle"
+import Header from "./header"
+
+const light = {
+  light: true,
+  main: "#2a2a2a",
+  secondary: "white",
+  link: "white",
+  brand: "rebeccapurple",
+  body: "white",
+}
+
+const dark = {
+  light: false,
+  main: "white",
+  secondary: "#2a2a2a",
+  link: "white",
+  brand: "palevioletred",
+  body: "#2a2a2a",
+}
+
+const LayoutEl = styled.div`
+  height: 100vh;
+  background-color: ${props =>
+    props.theme.secondary ? props.theme.body : undefined};
+  color: ${props => (props.theme.secondary ? props.theme.main : undefined)};
+`
+
+const CenterLayout = styled.div`
+  margin-left: auto;
+  height: 100vh;
+  margin-right: auto;
+  max-width: ${() => rhythm(24)};
+  padding: ${() => rhythm(1.5)} ${() => rhythm(3 / 4)};
+`
+
+const Layout = props => {
+  const [theme, setTheme] = useState(true)
+  const changeTheme = () => {
+    setTheme(!theme)
+    localStorage.setItem("lightTheme", !theme)
   }
+
+  useEffect(() => {
+    const localStorageLayout = localStorage.getItem("lightTheme")
+    if (localStorageLayout) {
+      setTheme(JSON.parse(localStorageLayout))
+    }
+  }, [])
+
+  return (
+    <ThemeProvider theme={theme ? light : dark}>
+      <LayoutEl>
+        <CenterLayout>
+          <header>
+            <Header title={props.title} location={props.location}>
+              <ToggleTheme changeTheme={changeTheme} lightTheme={theme} />
+            </Header>
+          </header>
+          <main
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {props.children}
+          </main>
+          <footer>© {new Date().getFullYear()} Daniel Stefan Klose</footer>
+        </CenterLayout>
+      </LayoutEl>
+    </ThemeProvider>
+  )
 }
 
 export default Layout
