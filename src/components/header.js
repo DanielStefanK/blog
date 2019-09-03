@@ -1,7 +1,7 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { ThemeConsumer } from "styled-components"
 
-import { Link } from "gatsby"
+import AniLink from "gatsby-plugin-transition-link/AniLink"
 
 const HeadWrapper = styled.div`
   overflow: hidden;
@@ -16,7 +16,7 @@ const LinkWrapper = styled.div`
   align-items: center;
 `
 
-const LinkItem = styled(Link)`
+const LinkItem = styled(AniLink)`
   color: ${props => (props.theme.secondary ? props.theme.main : undefined)};
   text-align: center;
   position: relative;
@@ -57,31 +57,39 @@ const Logo = styled.h3`
   }
 `
 
-const Header = ({ location, title, children }) => {
+const Header = ({ location, title, children, theme }) => {
   return (
     <HeadWrapper>
       <Logo>
-        <Link
-          css={`
-            color: ${props => props.theme.brand || "inherit"};
-          `}
-          style={{
-            boxShadow: `none`,
-            textDecoration: `none`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
+        <ThemeConsumer>
+          {theme => (
+            <AniLink
+              cover
+              bg={theme.brand || "black"}
+              css={`
+                color: ${props => props.theme.brand || "inherit"};
+              `}
+              style={{
+                boxShadow: `none`,
+                textDecoration: `none`,
+              }}
+              to={`/`}
+            >
+              {title}
+            </AniLink>
+          )}
+        </ThemeConsumer>
       </Logo>
       <LinkWrapper>
         <LinkItem
+          fade
           active={location.pathname === `${__PATH_PREFIX__}/blog`}
           to={`/blog`}
         >
           Blog
         </LinkItem>
         <LinkItem
+          fade
           active={location.pathname === `${__PATH_PREFIX__}/about`}
           to={`/about`}
         >

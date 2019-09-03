@@ -30,6 +30,7 @@ const LayoutEl = styled.div`
   background-color: ${props =>
     props.theme.secondary ? props.theme.body : undefined};
   color: ${props => (props.theme.secondary ? props.theme.main : undefined)};
+  transition: all 0.4s;
 `
 
 const CenterLayout = styled.div`
