@@ -1,36 +1,19 @@
 import React, { useState, useEffect } from "react"
-
-import { rhythm } from "../utils/typography"
-
 import styled, { ThemeProvider } from "styled-components"
+
+import { light, dark, commonTheme } from "../utils/theme"
 
 import ToggleTheme from "./themeToggle"
 import Header from "./header"
 
-const light = {
-  light: true,
-  main: "#2a2a2a",
-  secondary: "white",
-  link: "white",
-  brand: "rebeccapurple",
-  body: "white",
-}
-
-const dark = {
-  light: false,
-  main: "white",
-  secondary: "#2a2a2a",
-  link: "white",
-  brand: "#fcf571",
-  body: "#2a2a2a",
-}
+const { rhythm } = commonTheme
 
 const LayoutEl = styled.div`
   height: 100%;
-  background-color: ${props =>
-    props.theme.secondary ? props.theme.body : undefined};
-  color: ${props => (props.theme.secondary ? props.theme.main : undefined)};
-  transition: all 0.4s;E
+  background-color: ${({ theme }) => theme.backgroud};
+  color: ${({ theme }) => theme.textColor};
+  transition: all 0.4s;
+  font-family: ${({ theme }) => theme.fontFamily};
 `
 
 const CenterLayout = styled.div`
@@ -38,7 +21,7 @@ const CenterLayout = styled.div`
   min-height: 100vh;
   height: 100%;
   margin-right: auto;
-  max-width: ${() => rhythm(24)};
+  max-width: ${() => rhythm(200)};
   padding: ${() => rhythm(1.5)} ${() => rhythm(3 / 4)};
 `
 

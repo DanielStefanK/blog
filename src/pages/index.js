@@ -1,11 +1,38 @@
 import React from "react"
 import { graphql } from "gatsby"
-
 import AniLink from "gatsby-plugin-transition-link/AniLink"
+import styled from "styled-components"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
+
+import { Card, CardText, CardTitle } from "../components/card"
+import { commonTheme } from "../utils/theme"
+
+const { rhythm, borderRadius } = commonTheme
+const PostCard = styled(Card)`
+  margin-bottom: ${() => rhythm(4)};
+  color: "#ebebeb";
+  &:hover {
+    transform: scale(1.02);
+  }
+  &::before {
+    position: absolute;
+    border-radius: ${({ radius = 1 }) => borderRadius * radius}px;
+    content: "";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    z-index: -1;
+    transition: opacity 0.5s linear;
+    opacity: 0;
+  }
+  &:hover::before {
+    opacity: 0.05;
+  }
+`
 
 class BlogIndex extends React.Component {
   render() {
@@ -19,31 +46,21 @@ class BlogIndex extends React.Component {
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
           return (
-            <article key={node.fields.slug}>
-              <header>
-                <h3
-                  style={{
-                    marginBottom: rhythm(1 / 4),
-                  }}
-                >
-                  <AniLink
-                    fade
-                    style={{ boxShadow: `none` }}
-                    to={node.fields.slug}
-                  >
-                    {title}
-                  </AniLink>
-                </h3>
-                <small>{node.frontmatter.date}</small>
-              </header>
-              <section>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: node.frontmatter.description || node.excerpt,
-                  }}
-                />
-              </section>
-            </article>
+            <AniLink key={node.fields.slug} fade to={node.fields.slug}>
+              <PostCard hover={4} elevation={4}>
+                <CardTitle>
+                  <div>{title}</div>
+                  <small>{node.frontmatter.date}</small>
+                </CardTitle>
+                <CardText>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: node.frontmatter.description || node.excerpt,
+                    }}
+                  />
+                </CardText>
+              </PostCard>
+            </AniLink>
           )
         })}
       </Layout>

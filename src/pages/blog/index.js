@@ -1,11 +1,12 @@
 import React from "react"
 import { graphql } from "gatsby"
-
 import AniLink from "gatsby-plugin-transition-link/AniLink"
 
 import Layout from "../../components/layout"
 import SEO from "../../components/seo"
-import { rhythm } from "../../utils/typography"
+import { commonTheme } from "../../utils/theme"
+
+const { rhythm } = commonTheme
 
 class BlogIndex extends React.Component {
   render() {
