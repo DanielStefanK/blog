@@ -9,24 +9,32 @@ import Header from "./header"
 const { rhythm } = commonTheme
 
 const LayoutEl = styled.div`
-  height: 100%;
   background-color: ${({ theme }) => theme.backgroud};
   color: ${({ theme }) => theme.textColor};
-  transition: all 0.4s;
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px ${() => rhythm(2)} 0px ${() => rhythm(2)};
   font-family: ${({ theme }) => theme.fontFamily};
 `
 
 const CenterLayout = styled.div`
-  margin-left: auto;
-  min-height: 100vh;
-  height: 100%;
-  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   max-width: ${() => rhythm(200)};
-  padding: ${() => rhythm(1.5)} ${() => rhythm(3 / 4)};
+  width: 100%;
+`
+
+const Footer = styled.footer`
+  width: 100%;
 `
 
 const Layout = props => {
-  const [theme, setTheme] = useState(true)
+  const [theme, setTheme] = useState(false)
   const changeTheme = () => {
     setTheme(!theme)
     localStorage.setItem("lightTheme", !theme)
@@ -43,21 +51,12 @@ const Layout = props => {
     <ThemeProvider theme={theme ? light : dark}>
       <LayoutEl>
         <CenterLayout>
-          <header>
-            <Header title={props.title} location={props.location}>
-              <ToggleTheme changeTheme={changeTheme} lightTheme={theme} />
-            </Header>
-          </header>
-          <main
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {props.children}
-          </main>
-          <footer>© {new Date().getFullYear()} Daniel Stefan Klose</footer>
+          <Header title={props.title} location={props.location}>
+            <ToggleTheme changeTheme={changeTheme} lightTheme={theme} />
+          </Header>
+          {props.children}
         </CenterLayout>
+        <Footer>© {new Date().getFullYear()} Daniel Stefan Klose</Footer>
       </LayoutEl>
     </ThemeProvider>
   )
