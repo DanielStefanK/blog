@@ -47,11 +47,8 @@ const LinkItem = styled(AniLink)`
 `
 
 const Logo = styled.h3`
-  font-family: Montserrat, sans-serif;
   display: "inline";
-  margin-top: 0;
   transition: all 0.2s;
-
   &:hover {
     transform: scale(1) rotateZ(-2deg);
   }
